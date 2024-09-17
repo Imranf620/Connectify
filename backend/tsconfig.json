@@ -1,14 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2020", // Use a modern ECMAScript version
-    "module": "NodeNext", // Node.js uses commonjs modules
-    "outDir": "./dist", // Output folder for compiled files
-    "rootDir": "./src", // Input folder for TypeScript files
-    "strict": true, // Enable strict type checking
-    "esModuleInterop": true, // Allows default imports from CommonJS modules
-    "skipLibCheck": true, // Skip type checks for third-party libraries
-    "forceConsistentCasingInFileNames": true // File name casing consistency
-  },
-  "include": ["src"], // Include the source folder
-  "exclude": ["node_modules"] // Exclude node_modules from compilation
+    "target": "ES2020",
+    "module": "NodeNext",
+    "rootDir": "src",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "strict": true,
+  
+  }
 }
