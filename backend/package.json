@@ -1,0 +1,21 @@
+{
+  "name": "connectify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",                           
+    "start": "node dist/index.js",             
+    "dev": "nodemon src/server.ts",            
+    "watch": "tsc -w"                           
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
