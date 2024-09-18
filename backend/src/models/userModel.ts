@@ -2,14 +2,14 @@ import mongoose, { Document, Schema } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import crypto from "crypto"
 
 
-// Define an interface representing a User document in MongoDB
 export interface IUser extends Document {
     username: string;
     email: string;
     password: string;
-    profile?: string;
+    profilePic?: string;
     bio?: string;
     gender?: 'male' | 'female';
     bookmarks: mongoose.Types.ObjectId[];
@@ -18,10 +18,11 @@ export interface IUser extends Document {
     followers: mongoose.Types.ObjectId[];
     dob: Date;
     age: number;
-    resetPasswordToken: string;
-    resetPasswordExpires: Date;
+    resetPasswordToken: string | undefined;
+    resetPasswordExpires: Date | undefined;
     getJwtToken(): Promise<string>;
     comparePassword(password: string): Promise<boolean>;
+    getResetPasswordToken(): number;
 }
 
 // Define the schema for the User model
@@ -42,7 +43,7 @@ const userSchema = new mongoose.Schema<IUser>({
         minlength: [6, "Password must be at least 6 characters long"],
         select: false
     },
-    profile: {
+    profilePic: {
         type: String,
         default: "",
     },
@@ -111,5 +112,13 @@ userSchema.methods.getJwtToken = async function () {
 userSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
 
     return await bcrypt.compare(password, this.password)
+}
+
+userSchema.methods.getResetPasswordToken = async function () {
+    const token = crypto.randomBytes(20).toString("hex")
+    this.resetpasswordToken = crypto.createHash("sha256").update(token).digest("hex")
+    this.resetPasswordExpires = new Date(Date.now() + 15 * 60 * 1000)
+    return token
+
 }
 export const User = mongoose.model<IUser>("User", userSchema);
